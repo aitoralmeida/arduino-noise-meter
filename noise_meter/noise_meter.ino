@@ -86,41 +86,6 @@ void loop()
     counter++;
   }
   
-  /*
-  if (counter == 5){
-    //get te average noise level in 1 second
-    int avgLevel = accumulatedLevel/5;
-    String color = toColor(avgLevel);
-    
-    //create the msg with the color
-    String msg = MSG_START + color;
-    msg += MSG_END;
-    Serial.print("New msg: ");
-    Serial.println(msg);
-    
-    //change color
-    do_put("newdeveloper", "1", msg); 
-     
-    //restart
-    counter = 0;
-    accumulatedLevel = 0;
-  } else {
-    accumulatedLevel += noiseLevel;
-    counter++;
-  }
-  */
- 
- /*
-  if (!client.connected()) {
-    Serial.println();
-    Serial.println("disconnecting.");
-    client.stop();
-
-    // do nothing forevermore:
-    for(;;)
-      ;
-  } 
-  */
 }
 
 //normalizes the microphone noise value
@@ -158,51 +123,6 @@ String toColor(int level){
   
   return color;
 }
-
-
-void do_get(String msg){
-  Serial.println("doing get");
-  if (client.connect(server, port)) {
-    Serial.println("connected");
-    client.print("GET ");
-    client.print(msg);
-    client.println(" HTTP/1.0");
-    //client.println("GET /search?q=arduino HTTP/1.0");
-    client.println();
-  } 
-  else {
-    Serial.println("connection failed");
-  }
-}
-
-void do_post(String username, String id, String msg){
-  Serial.println("doing post");
-  
-  String postData = msg;
-
-
-  if (client.connect(server, port)) {
-    Serial.println("connected");
-    client.print("POST ");
-    client.print("/api/");
-    client.print(username);
-    client.print("/lights/");
-    client.print(id);
-    client.print("/state");
-    client.println(" HTTP/1.1");
-    client.println("Host: 10.164.37.209");
-    client.println("Content-Type: application/x-www-form-urlencoded");
-    client.println("Connection: close");
-    client.print("Content-Length: ");
-    client.println(postData.length());
-    client.println();
-    client.println(postData);
-  }
-  else {
-    Serial.println("connection failed");
-  }
-}
-
 
 void do_put(String username, String id, String msg){
   Serial.println("doing put");
